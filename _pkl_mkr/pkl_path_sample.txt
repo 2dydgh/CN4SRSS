@@ -1,0 +1,22 @@
+# pickle loader - pkl_path.txt
+# file name should be "pkl_path.txt" to use pickler loader
+# this line is comment
+# below style will be applied (key"split"value, example: key===value, defaule split is "===")
+# blabla
+key===value
+
+# CamVid_12_2Fold_v4
+# CamVid_12_2Fold_v4_A_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_CamVid_A_set_p360_b8_validWithWhole_CamVid_12_2Fold_v4_A_set/PKL
+# CamVid_12_2Fold_v4_B_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_CamVid_B_set_p360_b8_validWithWhole_CamVid_12_2Fold_v4_B_set/PKL
+
+# MiniCity_19_2Fold_v1
+# MiniCity_19_2Fold_v1_A_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_A_set_p660_b4_validWithWhole_bVal5_bTest5_MiniCity_19_2Fold_v1_A_set/PKL
+# MiniCity_19_2Fold_v1_B_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_B_set_p660_b4_validWithWhole_bVal5_bTest5_MiniCity_19_2Fold_v1_B_set/PKL
+
+# replace pickle for val
+# val_MiniCity_19_2Fold_v1_A_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_A_set_p660_b4_validWithWhole_bVal1_bTest1_MiniCity_19_2Fold_v1_A_set/PKL/val_E_1.pkl
+# val_MiniCity_19_2Fold_v1_B_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_B_set_p660_b4_validWithWhole_bVal1_bTest1_MiniCity_19_2Fold_v1_B_set/PKL/val_E_1.pkl
+
+# replace pickle for test
+# test_MiniCity_19_2Fold_v1_A_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_A_set_p660_b4_validWithWhole_bVal1_bTest1_MiniCity_19_2Fold_v1_A_set/PKL/test_E_1.pkl
+# test_MiniCity_19_2Fold_v1_B_set===/scratch/hpc119a06/bong/LAB/PKLs/PKL_Minicity_B_set_p660_b4_validWithWhole_bVal1_bTest1_MiniCity_19_2Fold_v1_B_set/PKL/test_E_1.pkl

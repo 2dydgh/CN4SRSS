@@ -1,0 +1,430 @@
+code v8
+v 1.02
+Multi-Processing applied on PIL & PLT save function
+Major score calcuration on CPU
+train data generated every 20 epochs
+
+v 1.03
+[~d]
+DLCs - calc_niqe_with_pil -> calc_niqe
+	now load npz file only once!
+[e]
+PSRN SSIM //// NIQE
+	now except separately!
+	only NIQE is unstable at the begining of training process
+
+[f]
+SSSR trainer -> Val 기준 SR Image 저장 가능
+print문 일부 수정 (MPRNet test 400 epoch 오류발생지점 참고)
+[f 2]
+proposed loss 의 subsample rate 옵션 주석처리됨 -> 이제 디폴트값 바로 반영됨
+
+
+
+-------------
+
+
+v 1.05
+archive (20220722 v 1.04 c fix 1) 기준으로 복원함
+buffer 크기 변환옵션 추가함
+[a]
+colab에서 "0016E5_08123.png" 이미지 결과 반드시 저장되게 trainer_sr & trainer_sssr 수정함
+[b]
+(n = 1, 2, 3 ...)
+check point 저장을 10*n - 9 번쨰 학습이 종료된 시점에서
+10*n 번째 학습이 종료된 시점으로 변경함
+-> 이제 체크포인트 로드 시, 데이터셋 생성을 n+1회 시행 후 학습하면 이전과 동일할 것으로 추측함
+
+
+v 1.06 fix 3
+SSSR 에 대해 시범적으로 체크포인트 로드 기능 추가함 (아직 검증 안됨)
+검증 완료 후, SR에 동일하게 적용할 예정
+
+v 1.07
+SSSR에 Local 에서도 Test 이미지 저장 수 줄여주는 기능 추가함
+최대 저장 이미지 수 조절 가능
+
+v 1.08
+스케쥴러 설정 변경 (주기 50 -> 25)
+최소 LR 수정 (1e-7 -> 1e-6)
+데이터셋 재생성 주기 변경 (10 -> 100)
+
+v 1.09
+Trainer 통합
+
+---
+
+v 2.00
+Custom_Dataset_V3 -> Custom_Dataset_V4 (only for Train)
+-> LR 이미지 실시간 재생성방식 도입
+데이터셋 재생성 옵션 DATASET_GEN_INTERVAL 제거됨 (불필요)
+학습용 데이터셋 loop 기능 사용 안함
+val 기준 best만 test 시행하게 수정됨
+check_point load를 위한 prev_best 추가
+
+v 2.01
+Custom_Dataset_V4 -> Custom_Dataset_V5 (only for Train)
+-> LR 이미지 불러와서 씀 (Data Augm만 시행)
+(fix 1) 현 버전 에서 정답라벨 변환 잘못되는 문제 수정
+
+v 2.02
+SR tester 추가
+
+v 2.03
+SS train 지원
+
+v 2.04
+SS, SR, SSSR 모두 Patch - Full 입력 선택 가능
+Dataloader v6로 개선
+-> 불필요한 데이터 생성 안함 (None 처리)
+(fix 1)
+(SR) HAN 지원
+
+v 2.05
+SR test 수정
+SR + SS test 지원
+NIQE 연산 시행을 epoch 2 부턴 Test 로 제한
+PSNR SSIM 연산을 skimage 방식에서 ignite 방식으로 변경함
+(fix 1)
+AMP로 인한 type 변환 (.to(torch.float32))
+(fix 2)
+자주 바꾸던 옵션들 수정 (Learning Rate 관련, Patch 사용여부 관련)
+
+v 2.06
+trainer_total 의 불필요한 경우의 tensor-> pil 변환 생략
+
+v 2.07
+log graph 저장경로를 log 저장 폴더 하위로 수정
+
+v 2.08
+IMDN 지원
+
+v 2.09
+model_name 처리방식 변경 (model_type으로 묶음처리)
+BSRN 지원
+
+v 2.10
+RFDN 지원
+
+v 2.11
+trainer_total.py 에서 일정 수 이하의 데이터에 대해 sub-process 생성 안하는 기능 추가
+(employ_threshold 변수 참고)
+
+SS 학습 시, 이미지 resize 기능 지원 (HP_MODEL_IMG_W & HP_MODEL_IMG_H에 None 이외 값 입력)
+
+v 2.12
+DABNet (SS Model) 지원
+
+v 2.13
+Data Augm -> Random Scale 지원
+
+v 2.14
+Data Augm -> Random Scale 개선 (force_fix 옵션과 연동되게 변경함)
+
+v 2.14.1
+Batch당 이미지 최대 2장만 저장되도록 설정 수정
+schedulers 파일로 분리
+minor update (SSSR)
+<fix 1>
+scheduler -> Poly_Warm_Cos_LR warning 수정
+<fix 2>
+Void 영역 Crop 시 mIoU 연산 실패오류 수정
+
+v 2.15
+Custom_Dataset_v6에서...
+HR Image 교체 옵션 (in_path_alter_hr_image) 추가함
+-> 해당기능 사용을 위한 관련코드 수정 완료
+
+Tester 에서...
+Interpolation 방식으로 Upscaled image 생성 기능 추가함
+
+v 2.16
+Custom_Dataset_v6에서...
+warning import 누락 수정됨
+
+CGNet (SS Model) 지원
+
+<fix 1>
+Alter HR 이미지 경로 조정
++ minor fix
+
+<fix 2>
+minor fix
+
+v 2.16.1
+SRSS 에 model_b 지원 추가
+
+v 2.16.2
+SRSS 에 model_c 지원 추가
+
+v 2.16.3
+dataloader 예외처리 수정 (SR mode)
+main_sr_train_IMDN 파일 추가
+
+v 2.16.4
+pil_augm_v3 각도 범위 제한 (0' ~ 89')
+일반적인 SR 모델 augm 방식 기능 pil_augm_lite 추가 -> SR 모드만 사용 가능
+Poly_Warm_Cos_LR 옵션 추가
+main_sr_train_ESRT 파일 추가
+
+v 2.16.5
+Poly_Warm_Cos_LR 옵션 추가
+
+<fix 1>
+Poly_Warm_Cos_LR typo 수정
+
+<fix 2>
+data_load_n_save -> Custom_Dataset_V6에서...
+특정 환경에서 Image.fromarray가 동작하지 못하는 문제 수정
+
+v 2.17
+_options의 MUST_SAVE_IMAGE를 list 형으로 변경
+FPENet 지원 (SS Model)
+
+v 2.17.1
+일부 주석 수정
+
+v 2.17.2
+main_ss_train_D3P default 값 수정
+일부 주석 수정
+
+v 2.17.3
+main_sssr_train_Prop_9_NEW default 값 수정
+trainer_total.py
+-> gradient clip 기능 추가 (is_gradient_clipped 참고)
+
+(fix 1)
+trainer_total.py
+-> gradient clip 기능 사용 안하는 경우에 대해 수정
+-> Label Dilation for train 선택가능하게 수정
+
+v 2.18
+(SS) Pixel Acc, Class Acc 측정 및 기록 추가
+
+v 2.19
+(SS) Pixel Acc, Class Acc, mIoU 측정에 Numpy 대신 Tensor 자료형 사용
+-> 정확성 검증 예정
+
+(fix 1)
+CUDA 환경에서 calc_pa_ca_miou_gray_tensor 오류 수정
+
+v 2.19.1
+RecordBox, RecordBox4IoUs 에서
+-> 불필요한 log graph update 생략기능 추가
+
+v 2.19.2
+학습 초반 이후 Test에서 NIQE 측정여부 선택기능 추가
+-> trainer_total의 will_niqe_calcurated 옵션 참고
+
+RecordBox & RecordBox4IoUs 에서 불필요한 출력문 제거
+
+v 2.19.3
+trainer_total.py (_trainer) & data_load_n_save.py (RecordBox & RecordBox4IoUs) 에서...
+-> PATH_COLAB_OUT_LOG, PATH_COLAB_OUT_MODEL 관련 기능 제거
+
+(fix 1)
+trainer_total.py (_trainer) minor fix
+
+(fix 2)
+trainer_total.py (_trainer) minor fix
+
+v 2.19.4
+tester_sr 개선 -> model_name을 분류 방식으로 처리
+
+v 2.19.5
+main_sr_train_BSRN.py 추가
+main_sr_train_RFDN.py 추가
+schedulers에 CosineDecay 추가
+
+(fix 1)
+main_sr_train_BSRN.py 주석 수정
+main_sr_train_RFDN.py 주석 수정
+
+v 2.19.6
+trainer_total.py에서...
+prev_best 사용 주의사항 주석 추가
+불필요한 log 파일 업데이트 생략 (SR mode의 경우)
+
+v 2.19.7
+SR loss 테스트용 파일 추가 (main_sr_train_IMDN_LOSS_CHECK.py)
+
+v 2.19.8
+라벨 시각화 파일 추가 (ETC_label_gray_2_color.py)
+loss 오류처리 try-except 수정 (trainer_total.py)
+
+---
+
+v 3.0.0
+MiniCity 데이터셋 지원
+
+v 3.0.1
+data_tools.py의 pil_marginer_v2 -> pil_marginer_v3 에서...
+Label의 전체 class 수 & void 번호 변수로 처리
+Cropped Label Validation 추가 및 관련 변수 _options.py에 연결 완료
+
+v 3.0.1 fix 1
+mIoU 측정 오류 수정 (dtype uint8 -> int64)
+
+v 3.1.0
+HP_DETECT_LOSS_ANOMALY: backward loss 이상 여부 검증여부 옵션 추가
+HP_LABEL_ONEHOT_ENCODE: label one-hot encoding 시행여부 옵션 추가
+
+v 3.1.1
+main_sssr_train_Prop_9_NEW.py 업데이트
+
+v 3.1.2
+data_load_n_save.py 의 Custom_Dataset_V6 에서...
+one-hot encode 방식 개선
+
+v 3.1.2 fix 1
+one-hot encode 방식 수정
+niqe 측정 epoch 1회로 수정
+
+v 3.2.0
+num_workers 지원 (windows 10에서도 사용 가능)
+소요시간 표시기능 추가
+
+v 3.2.0 fix 1
+main_sssr_train_Prop_9_NEW minor fix
+
+v 3.2.0 fix 2
+main_sr_train_Prop_9_NEW update
+
+v 3.2.0 fix 3
+Custom_Dataset_V6 불필요한 데이터 불러오기 생략기능 추가
+
+v 3.2.1
+학습완료 예정시간 표시기능 추가
+
+v 3.2.2
+test 시에 train과 동일하게 num_worker 옵션을 사용하게 수정
+valid 시행 시 patch 여부 선택 가능 (HP_VALID_WITH_PATCH 참고)
+-> whole image 사용 시 num_worker 옵션 활성화
+
+v 3.2.3
+SRSS test - SR 이미지 생성 추가
+FLOPs 측정 추가 (ETC_torch_info.py)
+
+v 3.3
+PAN train 추가 (main_sr_train_PAN.py, EISR network.)
+
+---
+
+v 4.0
+PAN test 추가
+LAPAR_A train / test 추가
+SR train opt_augm_lite에 Flip 옵션 선택 가능(flip_hori, flip_vert 여부 선택)
+불필요한 설정변수 삭제
+Dataset 선택에 따른 설정값 변경 필요성이 _options.py에만 존재하도록 개선
+
+v 4.1
+CamVid 5 Fold 옵션 추가
+prev_best에 의해 Test 시행 안 하더라도 current training best인 경우엔 model_state_dict 저장하도록 수정
+
+v 4.2
+tester_sr -> CPU 모드로 동작 가능하게 weight load 수정, Ignite로 PSNR, SSIM 측정, GPU timer 추가
+main_sssr_train_Prop_9_NEW -> CamVid 5 Fold 업데이트
+
+v 4.2.1
+tester_sr -> inference time outlier 최소화를 위한 warm-up 기능 추가
+
+v 4.2.2
+trainer_total -> 예외처리 오류 수정
+
+v 4.2.3
+trainer_total -> typo fix
+
+v 4.2.4
+utils.data_load_n_save.Custom_Dataset_V6 -> multiprocessing fork 지원
+
+memory leak가 발생하는 경우, matplotlib.use("Agg")를 통해 완화 가능 확인
+위 방식으로 matplotlib 라이브러리 동작법을 변경할 경우, 반드시 해당 라이브러리 사용 전에 시행할 것
+
+v 4.2.5
+_options.py 에서...
+    parser의 --name 으로 project folder base name 수정 가능
+    matplotlib backend를 Agg로 변경
+
+utils.data_load_n_save.Custom_Dataset_V6 -> 파일 이름순 정렬 sorted 시행
+
+v 4.2.6
+_options.py -> _opt_v2.py
+    arg parse 기능 추가 (main_m_1_46_t_1_0.py 참고)
+
+v 4.2.7
+utils.data_load_n_save.Custom_Dataset_V6에서...
+    이미지를 매번 새로 불러오는 옵션 추가 (load_everytime)
+    default는 기존대로 모든 이미지를 RAM에 올려두고 사용하는 방법
+    편의상 "./_load_everytime", "/root/LAB/_load_everytime" 디렉토리가 존재하는 경우, default를 True로 변경시킴
+
+v 4.2.8
+utils.data_load_n_save.RecordBox, utils.data_load_n_save.RecordBox4IoUs 에서
+    graph 업데이트 시행 안함에 대한 안내문을 print에서 warning으로 변경
+    "test" 키워드가 포함된 이름이거나 별도의 옵션이 주어지지 않은 경우, graph 갱신을 n회에 1번으로 변경
+        해당 주기는 graph_update_interval 옵션으로 지정 가능 (default: 100)
+        graph_update_count 를 통해 갱신요청횟수 측정
+
+v 4.3
+_load_everytime_False 폴더 추가
+    utils.data_load_n_save.Custom_Dataset_V6 에서...
+        "_load_everytime"으로 폴더 이름 변경시, 이미지 데이터를 매번 불러옴 (RAM 절약)
+
+_pkl_mkr 에서...
+    pkl_maker.py 추가
+        v 0.6 기반
+        dataloader를 통한 피클 생성기로, 전처리 작업시간 단축
+    pkl_loader.py 추가
+        v 0.5 기반
+        pkl_maker를 통해 생성된 피클 사용
+        default key: ["CamVid_12_2Fold_v4_A_set",       "CamVid_12_2Fold_v4_B_set"
+                     ,"MiniCity_19_2Fold_v1_A_set",     "MiniCity_19_2Fold_v1_B_set"
+                     ,"YCOR_9_2Fold_v1_A_set",          "YCOR_9_2Fold_v1_B_set"
+                     ]
+    pkl_path_sample.txt 추가
+        pkl_loader 사용을 위한 양식 예시
+        해당 파일의 이름을 "pkl_path.txt"로 수정하고, 파일 내용 수정을 통해 피클 지정 가능
+
+main_ss_train.py, _opt_ss.py 추가
+
+trainers 에서...
+    trainer_ss.py 재추가
+        semantic segmentation network trainer 개선 (trainer_p3 기반)
+
+v 4.3.1
+main_srss_train_CN4SRSS.py 추가됨
+    main_p1.py 기반
+
+_opt_CN4SRSS.py 추가됨
+    _opt_p1.py 기반
+
+trainer.trainer_CN4SRSS.py 추가됨
+    trainer_p1.py 기반
+    
+
+v 4.3.2
+main_sr_train.py 추가됨
+    main_ss_train.py 기반
+
+_opt_sr.py 추가됨
+    _opt_ss.py 기반
+
+trainers.trainer_sr.py 추가됨
+    trainers.trainer_ss.py 기반
+
+
+#-- 현재 버전
+
+v 4.3.3
+main_sr_test.py 수정됨
+testers.tester_sr.py 수정됨
+
+main_srss_train_CN4SRSS.py 수정됨
+trainer.trainer_CN4SRSS.py 수정됨
+_opt_CN4SRSS.py 수정됨
+    parser "dla" (detect loss anomaly, bool) 추가됨
+
+
+
+
+
+EOF
