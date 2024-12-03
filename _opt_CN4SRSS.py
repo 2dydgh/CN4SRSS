@@ -166,7 +166,7 @@ if RUN_WHERE == -9:
 
 #   -1: colab (vram 12 ~)
 elif RUN_WHERE == -1:
-    HP_NUM_WORKERS      = 0
+    HP_NUM_WORKERS      = 2
     PATH_BASE           = "/content/LAB/"
     NAME_FOLDER_PROJECT = "name_project"
 
