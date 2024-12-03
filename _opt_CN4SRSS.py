@@ -24,7 +24,7 @@ except:
 _str = "matplotlib backend: " + str(matplotlib.get_backend())
 warnings.warn(_str)
 
-RUN_WHERE = 3
+RUN_WHERE = -1
 
 for i_info in [(0, "D:/LAB/_RUN_on_0")
               ,(1, "/root/LAB/_RUN_on_1")
@@ -421,9 +421,9 @@ PATH_BASE_OUT           = PATH_BASE + "result_files/"         + NAME_FOLDER_PROJ
 # colab
 if RUN_WHERE == -1:
     print("RUN on Online (colab)")
-    PATH_BASE_OUT        = "/content/drive/MyDrive/Colab_Results/"      + NAME_FOLDER_PROJECT + "/"
-    PATH_COLAB_OUT_LOG   = "/content/drive/MyDrive/Colab_Results/_sub/" + NAME_FOLDER_PROJECT + "/logs/"
-    PATH_COLAB_OUT_MODEL = "/content/drive/MyDrive/Colab_Results/_sub/" + NAME_FOLDER_PROJECT + "/models/"
+    PATH_BASE_OUT        = "/content/gdrive/MyDrive/Colab_Results/"      + NAME_FOLDER_PROJECT + "/"
+    PATH_COLAB_OUT_LOG   = "/content/gdrive/MyDrive/Colab_Results/_sub/" + NAME_FOLDER_PROJECT + "/logs/"
+    PATH_COLAB_OUT_MODEL = "/content/gdrive/MyDrive/Colab_Results/_sub/" + NAME_FOLDER_PROJECT + "/models/"
 else:
     print("RUN on Local")
     PATH_COLAB_OUT_LOG   = "False"
